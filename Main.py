@@ -10,7 +10,7 @@ class Evaluate:
 
   def __init__(self, size):
     """Inits Evaluate with top, size_of_stack and stack.
-    Arguments:
+    Arguments:'
       size_of_stack: An integer to set the size of stack.
     """
     self.top = -1
@@ -24,9 +24,12 @@ class Evaluate:
     Returns:
       True if it is empty, else returns False.
     """
-      # Write your code here
-
-
+    # Write your code here
+    if self.top == -1:
+      return True
+    else:
+      return False
+    
   def pop(self):
     """
     Do pop operation if the stack is not empty.
@@ -34,6 +37,9 @@ class Evaluate:
       The data which is popped out if the stack is not empty.
     """
     # Write your code here
+    if not self.isEmpty():
+      self.stack.pop()
+
 
 
   def push(self, operand):
@@ -43,6 +49,9 @@ class Evaluate:
       operand: The operand to be pushed.
     """
     # Write your code here
+    if self.top != self.size_of_stack - 1:
+      self.stack.append(operand)
+
 
 
   def validate_postfix_expression(self, expression):
@@ -54,6 +63,18 @@ class Evaluate:
       True if the expression is valid, else returns False.
     """
     # Write your code here
+    a = 0
+    b = 0
+    for element in expression:
+      if element.isnumeric():
+        a = a + 1
+      else:
+        b = b + 1
+    if b == a - 1:
+      return True
+    else:
+      return False
+
 
 
   def evaluate_postfix_expression(self, expression):
@@ -65,6 +86,27 @@ class Evaluate:
       The result of evaluated postfix expression.
     """
     # Write your code here
+    stack = []
+    for i in expression:
+      if i.isnumeric():
+        stack.append(int(i))
+      if len(stack) >= 2:
+        if i == '+':
+          stack[-2] = stack[-2] + stack[-1]
+          stack.pop()
+        elif i == '-':
+          stack[-2] = stack[-2] - stack[-1]
+          stack.pop()
+        elif i == '*':
+          stack[-2] = stack[-2] * stack[-1]
+          stack.pop()
+        elif i == '/':
+          stack[-2] = stack[-2] / stack[-1]
+          stack.pop()
+        elif i == '^':
+          stack[-2] = stack[-2] ^ stack[-1]
+          stack.pop()
+    return int(stack[-1])
 
 
 # Do not change the following code
